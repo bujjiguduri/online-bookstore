@@ -1,30 +1,26 @@
-package com.bujji;
+package databasecon;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class jdbc {
-public static void main(String args[]) {
-	String driver="com.mysql.cj.jdbc.Driver";
-	String url="jdbc:mysql://localhost:3306/chinni";
-	String username="root";
-	String password="root";
-	try {
-		Class.forName(driver);
-		Connection con=DriverManager.getConnection(url,username,password);
-		String query="insert into login values(?,?)";
-		PreparedStatement st=con.prepareStatement(query);
-		st.setString(1, "bujji");
-		st.setString(2, "bujji@123");
-		st.executeUpdate();
-		con.close();
-		
-		
-	}
-	catch(Exception e) {
-		e.printStackTrace();
-		
-	}
-}
+    public static void main(String args[]) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ pradeepthi?useSSL=false", "root", "root");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from deepu");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                System.out.println("ID: " + id + ", name: " + name);
+            }
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
