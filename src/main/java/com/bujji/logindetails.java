@@ -1,11 +1,11 @@
-package com.bujji;
+
+
+
+
+package com.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,64 +13,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jasper.tagplugins.jstl.core.Catch;
-
-/**
- * Servlet implementation class logindetails
- */
 @WebServlet("/logindetails")
-public class logindetails extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public logindetails() {
-        super();
-        // TODO Auto-generated constructor stub
+public class LoginDetailsServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html><head><title>Login Details</title></head><body>");
+        out.println("<h2>Login Form</h2>");
+        out.println("<form method=\"post\" action=\"logindetails\">");
+        out.println("Username: <input type=\"text\" name=\"username\"><br>");
+        out.println("Password: <input type=\"password\" name=\"password\"><br>");
+        out.println("<input type=\"submit\" value=\"Login\">");
+        out.println("</form>");
+        out.println("</body></html>");
     }
 
-    
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-		String name=request.getParameter("username");
-		String password=request.getParameter("password");
-		PrintWriter pw=response.getWriter();
-		
-	}
-	String driver="com.mysql.cj.jdbc.Driver";
-	String url="jdbc:mysql://localhost:3306/chinni";
-	String username="root";
-	String password="root";
-	{
-      try {
-    	  Class.forName(driver);
-    	  Connection con=DriverManager.getConnection(url,username,password);
-    	String query="insert into username =? where  password=1";
-    	  //String query="insert into deepthi('username','password')" + "Values('bujji','bujji@123')";
-   
-    	  PreparedStatement s=con.prepareStatement(query);
-  
-    	  con.close();
-    	   }
-      catch(Exception e)
-      {
-    	  
-      }
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        // Here, you can check the username and password against a database or some other authentication mechanism.
+        // For simplicity, we just display them back to the user.
+
+        out.println("<html><head><title>Login Details</title></head><body>");
+        out.println("<h2>Login Successful</h2>");
+        out.println("<p>Username: " + username + "</p>");
+        out.println("<p>Password: " + password + "</p>");
+        out.println("</body></html>");
+    }
 }
-}
-
-
-
