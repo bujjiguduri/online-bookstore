@@ -1,75 +1,48 @@
-package com.bujji;
+package com.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.Response;
-import org.eclipse.jdt.internal.compiler.parser.RecoveredRequiresStatement;
-import org.eclipse.jdt.internal.compiler.util.HashtableOfIntValues;
+@WebServlet("/registrationdetails")
+public class registrationdetails extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-/**
- * Servlet implementation class registrationdatails
- */
-@WebServlet("/http://localhost:8080/onlinebookstore/registrationdatails")
-public class registrationdatails extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public registrationdatails() {
-        super();
-        // TODO Auto-generated constructor stub
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html><head><title>Registration Details</title></head><body>");
+        out.println("<h2>Registration Form</h2>");
+        out.println("<form method=\"post\" action=\"registrationdetails\">");
+        out.println("Name: <input type=\"text\" name=\"name\"><br>");
+        out.println("Email: <input type=\"text\" name=\"email\"><br>");
+        out.println("Password: <input type=\"password\" name=\"password\"><br>");
+        out.println("<input type=\"submit\" value=\"Submit\">");
+        out.println("</form>");
+        out.println("</body></html>");
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	//protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-	////}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-		String name=request.getParameter("username");
-		String password=request.getParameter("password");
-	   PrintWriter pw=response.getWriter();
-		
-	}
-	String driver="com.mysql.cj.jdbc.Driver";
-	String url="jdbc:mysql://localhost:3306/chinni";
-	String username="root";
-	String password="root";
-	{
-      try {
-    	  Class.forName(driver);
-    	  Connection con=DriverManager.getConnection(url,username,password);
-    	  String query="insert into deepthi('username','password','email','gender','dob')" + "Values('bujji','bujji@123','bujjigud96@gmail.com','female','01-01-2001')";
-    	  PreparedStatement s=con.prepareStatement(query);
-    	
-    	  s.execute("values");
-    	  con.close();
-    	   }
-      catch(Exception e)
-      {
-    	  
-      }
-	}
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
+        out.println("<html><head><title>Registration Details</title></head><body>");
+        out.println("<h2>Registration Successful</h2>");
+        out.println("<p>Name: " + name + "</p>");
+        out.println("<p>Email: " + email + "</p>");
+        out.println("<p>Password: " + password + "</p>");
+        out.println("</body></html>");
+    }
 }
